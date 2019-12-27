@@ -53,18 +53,18 @@ func New(maxLevel int) *SkipList {
 }
 
 func (skl *SkipList) Search(key Comparable) (interface{}, bool) {
-	searchNode := skl.Head
+	currentNode := skl.Head
 	for level := skl.Level - 1; level >= 0; level-- {
 		for {
-			tempNode := searchNode.Forward[level]
-			if tempNode == skl.Tail {
+			nextNode := currentNode.Forward[level]
+			if nextNode == skl.Tail {
 				break
-			} else if tempNode.Key.CompareTo(key) == 1 {
+			} else if nextNode.Key.CompareTo(key) == 1 {
 				break
-			} else if tempNode.Key.CompareTo(key) == 0 {
-				return tempNode.Value, true
+			} else if nextNode.Key.CompareTo(key) == 0 {
+				return nextNode.Value, true
 			} else {
-				searchNode = tempNode
+				currentNode = nextNode
 			}
 		}
 
@@ -84,7 +84,6 @@ func (skl *SkipList) randomLevel() int {
 func (skl *SkipList) Insert(key Comparable, value interface{}) {
 	level := skl.randomLevel()
 	targetNodes := make([]*Node, level)
-	fmt.Println(key, "level", level)
 	//搜索出插入节点
 	currentNode := skl.Head
 	for l := level - 1; l >= 0; l-- {
