@@ -1,0 +1,5 @@
+skiplist written in go
+
+usage:
+    struct implements Comparable interface can be inserted into skiplist.
+    example is in test/main.go
